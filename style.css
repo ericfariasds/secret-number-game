@@ -7,10 +7,11 @@
 
 body {
     background: linear-gradient(#1354A5 0%, #041832 33.33%, #041832 66.67%, #01080E 100%);
-    height: 100vh;
+    min-height: 100vh;          /* min-height em vez de height para não cortar em telas pequenas */
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 1rem;              /* evita o container encostar nas bordas em mobile */
 }
 
 body::before {
@@ -25,9 +26,10 @@ body::before {
     opacity: 0.4;
 }
 
+/* ── Container principal ── */
 .container {
     width: 80%;
-    height: 80%;
+    min-height: 80vh;           /* min-height para crescer com o conteúdo */
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -54,6 +56,7 @@ body::before {
     100% { transform: scale(1); }
 }
 
+/* ── Layout interno ── */
 .container__conteudo {
     display: flex;
     align-items: center;
@@ -66,36 +69,31 @@ body::before {
     padding: 3rem;
 }
 
-.container__botao {
-    border-radius: 16px;
-    background: #1875E8;
-    padding: 16px 24px;
-    width: 100%;
-    font-size: 24px;
-    font-weight: 700;
-    border: none;
-    margin-top: 2rem;
-    cursor: pointer;
-    transition: background 0.2s ease, transform 0.1s ease;
+/* ── Tipografia ── */
+h1 {
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 72px;
+    padding-bottom: 3rem;
 }
 
-.container__botao:hover:not(:disabled) {
-    background: #2a86f5;
-    transform: translateY(-2px);
+p, button {
+    font-family: 'Inter', sans-serif;
 }
 
-.container__botao:active:not(:disabled) {
-    transform: translateY(0);
+.texto__paragrafo {
+    font-size: 32px;
+    font-weight: 400;
 }
 
 .container__texto {
-    margin: 16px 0 16px 0;
+    margin: 16px 0;
 }
 
 .container__texto-azul {
     color: #1875E8;
 }
 
+/* ── Input ── */
 .container__input {
     width: 100%;
     height: 72px;
@@ -121,24 +119,32 @@ body::before {
     font-size: 18px;
 }
 
+/* ── Botões ── */
 .container__botoes {
     display: flex;
-    gap: 2em;
+    gap: 2rem;
 }
 
-h1 {
-    font-family: 'Chakra Petch', sans-serif;
-    font-size: 72px;
-    padding-bottom: 3rem;
+.container__botao {
+    border-radius: 16px;
+    background: #1875E8;
+    padding: 16px 24px;
+    width: 100%;
+    font-size: 24px;
+    font-weight: 700;
+    border: none;
+    margin-top: 2rem;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease;
 }
 
-p, button {
-    font-family: 'Inter', sans-serif;
+.container__botao:hover:not(:disabled) {
+    background: #2a86f5;
+    transform: translateY(-2px);
 }
 
-.texto__paragrafo {
-    font-size: 32px;
-    font-weight: 400;
+.container__botao:active:not(:disabled) {
+    transform: translateY(0);
 }
 
 button:disabled {
@@ -146,29 +152,129 @@ button:disabled {
     cursor: not-allowed;
 }
 
+/* ════════════════════════════════════════════
+   RESPONSIVIDADE
+   Breakpoints:
+   - Desktop grande: > 1250px  → layout padrão com imagem
+   - Tablet:         768–1250px → sem imagem, ajustes de fonte
+   - Mobile:         480–767px  → container full width, fontes menores
+   - Mobile pequeno: < 480px   → ajustes finos para telas muito estreitas
+════════════════════════════════════════════ */
+
+/* ── Tablet (até 1250px) ── */
 @media screen and (max-width: 1250px) {
-    h1 {
-        font-size: 50px;
+    .container {
+        width: 90%;
     }
 
-    .container__botao {
-        font-size: 16px;
+    .container__imagem-pessoa {
+        display: none;          /* esconde a imagem decorativa */
+    }
+
+    .container__conteudo {
+        position: static;       /* sai do absolute para fluir normalmente */
+        display: block;
+        width: 100%;
+    }
+
+    .container__informacoes {
+        padding: 2rem;
+    }
+
+    h1 {
+        font-size: 50px;
+        padding-bottom: 2rem;
     }
 
     .texto__paragrafo {
         font-size: 24px;
     }
 
-    .container__imagem-pessoa {
-        display: none;
+    .container__botao {
+        font-size: 18px;
+    }
+}
+
+/* ── Mobile (até 767px) ── */
+@media screen and (max-width: 767px) {
+    body {
+        padding: 0.75rem;
+        align-items: flex-start;    /* alinha no topo para não sufocar em telas curtas */
+        padding-top: 2rem;
     }
 
-    .container__conteudo {
-        display: block;
-        position: inherit;
+    .container {
+        width: 100%;
+        min-height: auto;
+        border-radius: 16px;
     }
 
     .container__informacoes {
-        padding: 1rem;
+        padding: 1.5rem;
+    }
+
+    h1 {
+        font-size: 36px;
+        padding-bottom: 1rem;
+    }
+
+    .texto__paragrafo {
+        font-size: 20px;
+    }
+
+    .container__input {
+        height: 56px;
+        font-size: 18px;
+        padding: 1rem 1.25rem;
+    }
+
+    .container__input::placeholder {
+        font-size: 15px;
+    }
+
+    .container__botoes {
+        gap: 1rem;
+    }
+
+    .container__botao {
+        font-size: 16px;
+        padding: 12px 16px;
+        margin-top: 1rem;
+        border-radius: 12px;
+    }
+}
+
+/* ── Mobile pequeno (até 479px) ── */
+@media screen and (max-width: 479px) {
+    body {
+        padding: 0.5rem;
+        padding-top: 1rem;
+    }
+
+    .container {
+        border-radius: 12px;
+    }
+
+    .container__informacoes {
+        padding: 1.25rem;
+    }
+
+    h1 {
+        font-size: 28px;
+        padding-bottom: 0.75rem;
+    }
+
+    .texto__paragrafo {
+        font-size: 17px;
+    }
+
+    .container__botoes {
+        flex-direction: column;     /* botões empilhados em telas muito estreitas */
+        gap: 0.5rem;
+    }
+
+    .container__botao {
+        font-size: 15px;
+        margin-top: 0.75rem;
     }
 }
