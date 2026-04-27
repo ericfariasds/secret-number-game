@@ -13,7 +13,6 @@ body {
     justify-content: center;
 }
 
-
 body::before {
     background-image: url("img/code.png");
     background-repeat: no-repeat;
@@ -38,8 +37,22 @@ body::before {
     background-image: url("img/Ruido.png");
     background-size: 100% 100%;
     position: relative;
+    transition: border-color 0.4s ease, box-shadow 0.4s ease;
 }
 
+.container.vitoria {
+    border-color: #22c55e;
+    box-shadow: 0 0 32px rgba(34, 197, 94, 0.35);
+    animation: pulso-vitoria 1.5s ease-in-out;
+}
+
+@keyframes pulso-vitoria {
+    0%   { transform: scale(1); }
+    25%  { transform: scale(1.015); }
+    50%  { transform: scale(1); }
+    75%  { transform: scale(1.01); }
+    100% { transform: scale(1); }
+}
 
 .container__conteudo {
     display: flex;
@@ -62,6 +75,17 @@ body::before {
     font-weight: 700;
     border: none;
     margin-top: 2rem;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.container__botao:hover:not(:disabled) {
+    background: #2a86f5;
+    transform: translateY(-2px);
+}
+
+.container__botao:active:not(:disabled) {
+    transform: translateY(0);
 }
 
 .container__texto {
@@ -77,12 +101,24 @@ body::before {
     height: 72px;
     border-radius: 16px;
     background-color: #FFF;
-    border: none;
+    border: 2px solid transparent;
     color: #1875E8;
     padding: 2rem;
     font-size: 24px;
     font-weight: 700;
     font-family: 'Inter', sans-serif;
+    transition: border-color 0.2s ease;
+    outline: none;
+}
+
+.container__input:focus {
+    border-color: #1875E8;
+}
+
+.container__input::placeholder {
+    color: #a0aec0;
+    font-weight: 400;
+    font-size: 18px;
 }
 
 .container__botoes {
@@ -96,8 +132,7 @@ h1 {
     padding-bottom: 3rem;
 }
 
-p,
-button {
+p, button {
     font-family: 'Inter', sans-serif;
 }
 
@@ -108,10 +143,10 @@ button {
 
 button:disabled {
     background-color: gray;
+    cursor: not-allowed;
 }
 
 @media screen and (max-width: 1250px) {
-
     h1 {
         font-size: 50px;
     }
@@ -119,7 +154,6 @@ button:disabled {
     .container__botao {
         font-size: 16px;
     }
-
 
     .texto__paragrafo {
         font-size: 24px;
@@ -135,6 +169,6 @@ button:disabled {
     }
 
     .container__informacoes {
-        padding: 1rem
+        padding: 1rem;
     }
 }
