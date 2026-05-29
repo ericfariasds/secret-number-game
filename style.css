@@ -120,6 +120,38 @@ p, button {
 }
 
 /* ── Botões ── */
+#lang-btn {
+    --lang-bg:       #041832;
+    --lang-bg-hover: #0a2d55;
+    --lang-border:   #1875E8;
+    --lang-color:    #ffffff;
+ 
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 999;
+ 
+    background-color: var(--lang-bg);
+    border: 1.5px solid var(--lang-border);
+    color: var(--lang-color);
+    padding: 10px 18px;
+    border-radius: 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+ 
+#lang-btn:hover {
+    background-color: var(--lang-bg-hover);
+    transform: translateY(-2px);
+}
+ 
+#lang-btn:active {
+    transform: translateY(0);
+}
+
 .container__botoes {
     display: flex;
     gap: 2rem;
@@ -151,15 +183,6 @@ button:disabled {
     background-color: gray;
     cursor: not-allowed;
 }
-
-/* ════════════════════════════════════════════
-   RESPONSIVIDADE
-   Breakpoints:
-   - Desktop grande: > 1250px  → layout padrão com imagem
-   - Tablet:         768–1250px → sem imagem, ajustes de fonte
-   - Mobile:         480–767px  → container full width, fontes menores
-   - Mobile pequeno: < 480px   → ajustes finos para telas muito estreitas
-════════════════════════════════════════════ */
 
 /* ── Tablet (até 1250px) ── */
 @media screen and (max-width: 1250px) {

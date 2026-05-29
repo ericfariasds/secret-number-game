@@ -4,6 +4,104 @@ const CONFIG = {
     tentativasMaximas: 5,
 };
 
+// SISTEMA DE TRADUÇÃO
+let idiomaAtual = 'pt';
+ 
+const TEXTOS = {
+    pt: {
+        langBtn:          '🌐 Translate to English',
+        titulo:           'Jogo do Número Secreto',
+        instrucao:        (limite) => `Escolha um número entre 1 e ${limite}`,
+        placeholder:      'Digite seu chute...',
+        btnChutar:        'Chutar',
+        btnReiniciar:     'Novo jogo',
+        parabens:         'Parabéns, você acertou!',
+        descobriu:        (t, pal) => `Você descobriu o número secreto com ${t} ${pal}!`,
+        tentativa:        'tentativa',
+        tentativas:       'tentativas',
+        maior:            'O número secreto é maior',
+        menor:            'O número secreto é menor',
+        perdeu:           'Que pena, você perdeu!',
+        numeroEra:        (n) => `O número secreto era ${n}.`,
+        digitaValido:     'Por favor, digite um número válido!',
+        foraDaFaixa:      (limite) => `Digite um número entre 1 e ${limite}!`,
+    },
+    en: {
+        langBtn:          '🌐 Traduzir para português',
+        titulo:           'Secret Number Game',
+        instrucao:        (limite) => `Choose a number between 1 and ${limite}`,
+        placeholder:      'Type your guess...',
+        btnChutar:        'Guess',
+        btnReiniciar:     'New game',
+        parabens:         'Congrats, you got it!',
+        descobriu:        (t, pal) => `You found the secret number in ${t} ${pal}!`,
+        tentativa:        'attempt',
+        tentativas:       'attempts',
+        maior:            'The secret number is higher',
+        menor:            'The secret number is lower',
+        perdeu:           'Too bad, you lost!',
+        numeroEra:        (n) => `The secret number was ${n}.`,
+        digitaValido:     'Please enter a valid number!',
+        foraDaFaixa:      (limite) => `Enter a number between 1 and ${limite}!`,
+    }
+};
+ 
+// Retorna o objeto de textos do idioma atual
+function t() {
+    return TEXTOS[idiomaAtual];
+}
+ 
+// Alterna entre PT e EN e atualiza todos os textos fixos da interface
+function alternarIdioma() {
+    idiomaAtual = idiomaAtual === 'pt' ? 'en' : 'pt';
+ 
+    // Atualiza o botão de idioma
+    document.getElementById('lang-btn').textContent = t().langBtn;
+ 
+    // Atualiza placeholder do input
+    document.querySelector('input').placeholder = t().placeholder;
+ 
+    // Atualiza botões
+    document.querySelector('.container__botao--chutar').textContent = t().btnChutar;
+    document.getElementById('reiniciar').textContent = t().btnReiniciar;
+ 
+    // Re-exibe a mensagem atual na tela (título e parágrafo)
+    atualizarMensagemAtual();
+}
+ 
+// Guarda o estado da mensagem atual para reexibir no idioma certo ao trocar
+let estadoMensagem = 'inicial'; // 'inicial' | 'acertou' | 'perdeu' | 'maior' | 'menor' | 'invalido' | 'foraDaFaixa'
+ 
+function atualizarMensagemAtual() {
+    switch (estadoMensagem) {
+        case 'inicial':
+            exibirTextoNaTela('h1', t().titulo);
+            exibirTextoNaTela('p', t().instrucao(CONFIG.numeroLimite));
+            break;
+        case 'acertou':
+            const palavraTentativa = tentativas === 1 ? t().tentativa : t().tentativas;
+            exibirTextoNaTela('h1', t().parabens);
+            exibirTextoNaTela('p', t().descobriu(tentativas, palavraTentativa));
+            break;
+        case 'perdeu':
+            exibirTextoNaTela('h1', t().perdeu);
+            exibirTextoNaTela('p', t().numeroEra(numeroSecreto));
+            break;
+        case 'maior':
+            exibirTextoNaTela('p', t().maior);
+            break;
+        case 'menor':
+            exibirTextoNaTela('p', t().menor);
+            break;
+        case 'invalido':
+            exibirTextoNaTela('p', t().digitaValido);
+            break;
+        case 'foraDaFaixa':
+            exibirTextoNaTela('p', t().foraDaFaixa(CONFIG.numeroLimite));
+            break;
+    }
+}
+
 // Variáveis de estado do jogo
 let listaDeNumerosSorteados = [];
 let numeroSecreto = gerarNumeroAleatorio();
