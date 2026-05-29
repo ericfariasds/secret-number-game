@@ -2,6 +2,8 @@
 
 Um jogo interativo de adivinhação desenvolvido com HTML, CSS e JavaScript puro.
 
+[🇺🇸 English version](README.en.md)
+
 ## Como jogar
 
 1. O jogo sorteia um número secreto entre **1 e 10**
